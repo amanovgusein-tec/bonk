@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace RoguelikeGame
 {
-    // Класс Оружие (без прочности)
     public class Weapon
     {
         public string Name { get; }
@@ -16,7 +15,7 @@ namespace RoguelikeGame
         }
     }
 
-    // Класс Аптечка
+    
     public class Aid
     {
         public string Name { get; }
@@ -29,7 +28,6 @@ namespace RoguelikeGame
         }
     }
 
-    // Класс Противник
     public class Enemy
     {
         public string Name { get; }
@@ -51,7 +49,7 @@ namespace RoguelikeGame
         }
     }
 
-    // Класс Игрок
+    
     public class Player
     {
         public string Name { get; }
@@ -97,7 +95,6 @@ namespace RoguelikeGame
             Console.Write("> ");
             string playerName = Console.ReadLine();
 
-            // Создание игрока со случайными предметами
             Weapon playerWeapon = GenerateWeapon();
             Aid playerAid = GenerateAid();
 
@@ -112,14 +109,14 @@ namespace RoguelikeGame
             Console.WriteLine($"Вам был ниспослан меч **{player.Weapon.Name} ({player.Weapon.Damage})**, а также **{player.AidKit.Name}** аптечка ({player.AidKit.HealAmount}hp).");
             Console.WriteLine($"У вас {player.Health}hp.\n");
 
-            // Главный игровой цикл
+            
             while (player.Health > 0)
             {
                 Enemy enemy = GenerateEnemy();
 
                 Console.WriteLine($"**{player.Name}** встречает врага **{enemy.Name} ({enemy.Health}hp)**, у врага на поясе сияет оружие **{enemy.Weapon.Name} ({enemy.Weapon.Damage})**");
 
-                // Бой с текущим врагом
+                
                 while (enemy.Health > 0 && player.Health > 0)
                 {
                     Console.WriteLine("Что вы будете делать?");
@@ -132,17 +129,17 @@ namespace RoguelikeGame
 
                     switch (choice)
                     {
-                        case "1": // Атака
+                        case "1":  
                             int playerDamage = player.Attack();
                             enemy.Health -= playerDamage;
                             Console.WriteLine($"\n**{player.Name}** ударил противника **{enemy.Name}**");
                             break;
 
-                        case "2": // Пропуск хода
+                        case "2": 
                             Console.WriteLine($"\n**{player.Name}** пропускает ход");
                             break;
 
-                        case "3": // Лечение
+                        case "3": 
                             player.Heal();
                             Console.WriteLine($"\n**{player.Name}** использовал аптечку");
                             break;
@@ -152,7 +149,7 @@ namespace RoguelikeGame
                             break;
                     }
 
-                    // Если враг еще жив, он атакует
+                    
                     if (enemy.Health > 0)
                     {
                         int enemyDamage = enemy.Attack();
@@ -160,17 +157,14 @@ namespace RoguelikeGame
                         Console.WriteLine($"Противник **{enemy.Name}** ударил вас!");
                     }
 
-                    // Показываем текущее состояние
                     Console.WriteLine($"У противника {Math.Max(enemy.Health, 0)}hp, у вас {Math.Max(player.Health, 0)}hp");
 
-                    // Если игрок умер
                     if (player.Health <= 0)
                     {
                         Console.WriteLine("\nВы погибли...");
                         break;
                     }
 
-                    // Если враг умер
                     if (enemy.Health <= 0)
                     {
                         Console.WriteLine($"\n**{player.Name}** победил врага **{enemy.Name}**!");
